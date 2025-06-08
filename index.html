@@ -22,15 +22,5 @@
   <script type="module" src="app.js"></script>
 
 
-  <button id="speakBtn2">Ahoj</button>
-  <script>
-    document.getElementById('speakBtn2').addEventListener('click', () => {
-      const utterance = new SpeechSynthesisUtterance('ahoj');
-      utterance.lang = 'sk-SK';
-      speechSynthesis.speak(utterance);
-      console.log('Speech triggered');
-    });
-  </script>
-
 </body>
 </html>
