@@ -10,6 +10,8 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   }
 })
 
+
+document.addEventListener('DOMContentLoaded', () => {
 const select = document.getElementById('wordSelect')
 const translationDiv = document.getElementById('translation')
 const speakBtn = document.getElementById('speakBtn')
@@ -53,4 +55,5 @@ speakBtn.addEventListener('click', () => {
   const utterance = new SpeechSynthesisUtterance(currentSlovakWord)
   utterance.lang = 'sk-SK'
   speechSynthesis.speak(utterance)
+})
 })
