@@ -2,7 +2,13 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const supabaseUrl = 'https://znuegshdnkwwysyevohd.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpudWVnc2hkbmt3d3lzeWV2b2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0MDIwOTUsImV4cCI6MjA2NDk3ODA5NX0.tChMtrpMnE_1oXDjYO-KKhBZDL8lIXdzci7NGrD_kpw'
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  global: {
+    headers: {
+      'Accept': 'application/json'
+    }
+  }
+})
 
 const select = document.getElementById('wordSelect')
 const translationDiv = document.getElementById('translation')
@@ -15,12 +21,14 @@ select.addEventListener('change', async () => {
   translationDiv.textContent = ''
   speakBtn.disabled = true
 
-  if (!enWord) return
+  if (!enWord) returnS
 
   const { data, error } = await supabase
     .from('vocab')
     .select('sk_word')
     .eq('en_word', enWord)
+    .single()
+
   console.log(data)
 
   if (error || !data) {
