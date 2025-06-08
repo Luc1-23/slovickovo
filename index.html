@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Slovak Translator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+    label, select, button {
+      font-size: 1.2em;
+      margin: 0.5em 0;
+    }
+    #translation {
+      margin-top: 1em;
+      font-weight: bold;
+      font-size: 1.5em;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple Slovak Translator</h1>
+
+  <label for="word-select">Choose a word:</label>
+  <select id="word-select">
+    <option value="">--Select a word--</option>
+    <option value="hello">Hello</option>
+    <option value="thankyou">Thank you</option>
+    <option value="please">Please</option>
+    <option value="goodbye">Goodbye</option>
+    <option value="yes">Yes</option>
+  </select>
+
+  <div id="translation">Translation will appear here</div>
+
+  <button id="speak-btn" disabled>🔊 Read aloud in Slovak</button>
+
+  <script>
+    // Our dictionary: English word key -> Slovak translation
+    const dictionary = {
+      hello: "Ahoj",
+      thankyou: "Ďakujem",
+      please: "Prosím",
+      goodbye: "Dovidenia",
+      yes: "Áno"
+    };
+
+    const select = document.getElementById('word-select');
+    const translationDiv = document.getElementById('translation');
+    const speakBtn = document.getElementById('speak-btn');
+
+    // Update translation when selection changes
+    select.addEventListener('change', () => {
+      const selected = select.value;
+      if (selected && dictionary[selected]) {
+        translationDiv.textContent = dictionary[selected];
+        speakBtn.disabled = false;  // Enable speak button
+      } else {
+        translationDiv.textContent = "Translation will appear here";
+        speakBtn.disabled = true;
+      }
+    });
+
+    // Text-to-speech when button clicked
+    speakBtn.addEventListener('click', () => {
+      const text = translationDiv.textContent;
+      if (!text || text === "Translation will appear here") return;
+
+      // Create a new speech synthesis utterance
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'sk-SK';  // Slovak language code
+
+      // Speak the text
+      window.speechSynthesis.speak(utterance);
+    });
+  </script>
+</body>
+</html>
