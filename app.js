@@ -21,7 +21,7 @@ select.addEventListener('change', async () => {
     .from('vocab')
     .select('sk_word')
     .eq('en_word', enWord)
-    .single()
+  console.log(data)
 
   if (error || !data) {
     translationDiv.textContent = 'Translation not found.'
