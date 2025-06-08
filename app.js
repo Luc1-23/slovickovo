@@ -23,7 +23,7 @@ select.addEventListener('change', async () => {
   translationDiv.textContent = ''
   speakBtn.disabled = true
 
-  if (!enWord) returnS
+  if (!enWord) return;
 
 
 
@@ -42,6 +42,7 @@ const { data, error } = await supabase
 
   if (data && data.length > 0) {
   const translation = data[0].sk_word;
+  currentSlovakWord = translation;
   console.log('Translation:', translation);
   document.getElementById("translation").textContent = `Slovak: ${translation}`;
   speakBtn.disabled = false
@@ -52,6 +53,7 @@ const { data, error } = await supabase
 })
 
 speakBtn.addEventListener('click', () => {
+  if (!currentSlovakWord) return; // guard clause
   const utterance = new SpeechSynthesisUtterance(currentSlovakWord)
   utterance.lang = 'sk-SK'
   speechSynthesis.speak(utterance)
