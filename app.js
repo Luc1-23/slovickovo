@@ -23,22 +23,30 @@ select.addEventListener('change', async () => {
 
   if (!enWord) returnS
 
-  const { data, error } = await supabase
+
+
+const { data, error } = await supabase
     .from('vocab')
     .select('sk_word')
     .eq('en_word', enWord)
-    .single()
 
-  console.log(data)
+  console.log('Raw data result:', data)
+  console.log('Error (if any):', error)
 
   if (error || !data) {
     translationDiv.textContent = 'Translation not found.'
     return
   }
 
-  currentSlovakWord = data.sk_word
-  translationDiv.textContent = `Slovak: ${currentSlovakWord}`
+  if (data && data.length > 0) {
+  const translation = data[0].sk_word;
+  console.log('Translation:', translation);
+  document.getElementById("translation").textContent = `Slovak: ${translation}`;
   speakBtn.disabled = false
+} else {
+  document.getElementById("translation").textContent = "Slovak: not found";
+}
+
 })
 
 speakBtn.addEventListener('click', () => {
